@@ -1,0 +1,2 @@
+D:/Final Year Project/pass_ats/android/app/.cxx/Debug/f5z544p3/x86/CMakeFiles/edit_cache.dir
+D:/Final Year Project/pass_ats/android/app/.cxx/Debug/f5z544p3/x86/CMakeFiles/rebuild_cache.dir
