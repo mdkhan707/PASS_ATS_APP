@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pass_ats/View/Screens/Auth/splash_screen.dart';
+import 'package:pass_ats/nav_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: const Splash_Screen());
+            home: const Custom_NavigationBar());
       },
       designSize: const Size(390, 844),
     );

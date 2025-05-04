@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pass_ats/Controllers/resume_data_controller.dart';
 import 'package:pass_ats/View/Screens/SkillsScreen.dart';
 import 'package:pass_ats/View/Screens/certification_screen.dart';
 import 'package:pass_ats/View/Screens/education_screen.dart';
@@ -10,17 +11,21 @@ import 'package:pass_ats/View/Screens/language_screen.dart';
 import 'package:pass_ats/View/Screens/objective_screen.dart';
 import 'package:pass_ats/View/Screens/personal_details_screen.dart';
 import 'package:pass_ats/View/Screens/project_screen.dart';
+import 'package:pass_ats/View/Screens/soft_skills_screen.dart';
+import 'package:pass_ats/View/Widgets/custom_round_button.dart';
 import 'package:pass_ats/View/Widgets/gradient_scaffold.dart';
 import 'package:pass_ats/constants/colors.dart';
 
 class SectionScreen extends StatelessWidget {
-  SectionScreen({Key? key}) : super(key: key);
-
+  SectionScreen({super.key});
+  final ResumeDataController resumeCtrl = Get.isRegistered()
+      ? Get.find()
+      : Get.put(ResumeDataController(), permanent: true);
   final List<Map<String, dynamic>> sectionItems = [
     {
       'icon': Icons.person,
       'label': 'Personal',
-      'screen': const Personal_Detail_screen()
+      'screen': const PersonalDetailScreen()
     },
     {'icon': Icons.school, 'label': 'Education', 'screen': EducationScreen()},
     {'icon': Icons.work, 'label': 'Experience', 'screen': ExperienceScreen()},
@@ -49,41 +54,71 @@ class SectionScreen extends StatelessWidget {
       'label': 'certifications',
       'screen': CertificationScreen()
     },
+    {
+      'icon': Icons.self_improvement,
+      'label': 'Soft Skills',
+      'screen': const SoftSkillsScreen(),
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () => Get.back(),
-                    child: Icon(Icons.arrow_back, color: Colors.white),
-                  ),
-                  SizedBox(width: 10.w),
-                  Text(
-                    'Sections',
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () => Get.back(),
+                      child: Icon(Icons.arrow_back, color: Colors.white),
                     ),
-                  ),
-                  Spacer(),
-                  Icon(Icons.help_outline, color: Colors.white),
-                ],
-              ),
-              SizedBox(height: 20.h),
-              _sectionGroup(title: "Sections", items: sectionItems),
-              SizedBox(height: 20.h),
-              _sectionGroup(title: "More Sections", items: moreSectionItems),
-            ],
+                    SizedBox(width: 10.w),
+                    Text(
+                      'Sections',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Spacer(),
+                    Icon(Icons.help_outline, color: Colors.white),
+                  ],
+                ),
+                SizedBox(height: 20.h),
+                _sectionGroup(title: "Sections", items: sectionItems),
+                SizedBox(height: 20.h),
+                _sectionGroup(title: "More Sections", items: moreSectionItems),
+                SizedBox(height: 20.h),
+                Obx(() => RoundButton(
+                      title: "Generate Resume",
+                      onTap: resumeCtrl.isGenerating.value
+                          ? () {
+                              print('is loading value is true');
+                              Get.snackbar(
+                                'Generating Resume',
+                                'Please wait while we generate your resume.',
+                                backgroundColor: Colors.white,
+                                colorText: Colors.black,
+                                duration: Duration(seconds: 2),
+                              );
+                              resumeCtrl.isGenerating.value = false;
+                              return;
+                            }
+                          : () {
+                              print('This function is called');
+                              resumeCtrl.generateResume();
+                            },
+                      color: ColorConstants().buttonColor,
+                      isloading: resumeCtrl.isGenerating.value,
+                    )),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,0 +1,2 @@
+C:/Users/PMLS/Documents/Flutter Projects/PASS_ATS_APP/android/app/.cxx/Debug/624f021e/x86/CMakeFiles/edit_cache.dir
+C:/Users/PMLS/Documents/Flutter Projects/PASS_ATS_APP/android/app/.cxx/Debug/624f021e/x86/CMakeFiles/rebuild_cache.dir

@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pass_ats/Controllers/resume_data_controller.dart';
+
 import 'package:pass_ats/View/Widgets/custom_resume_text_field.dart';
 import 'package:pass_ats/View/Widgets/custom_round_button.dart';
 import 'package:pass_ats/constants/colors.dart';
 import 'package:pass_ats/View/Widgets/gradient_scaffold.dart';
 import 'package:pass_ats/Controllers/single_field_controller.dart';
 
-class SkillsScreen extends StatelessWidget {
-  SkillsScreen({super.key});
+class SkillsScreen extends StatefulWidget {
+  const SkillsScreen({Key? key}) : super(key: key);
 
-  final controller = Get.put(SingleFieldController());
+  @override
+  _SkillsScreenState createState() => _SkillsScreenState();
+}
 
+class _SkillsScreenState extends State<SkillsScreen> {
+  // Make this permanent so its list of controllers (and their texts) survives pop/push
+  final SingleFieldController controller = Get.isRegistered()
+      ? Get.find<SingleFieldController>()
+      : Get.put(SingleFieldController());
+  final ResumeDataController resumeCtrl = Get.isRegistered()
+      ? Get.find()
+      : Get.put(ResumeDataController(), permanent: true);
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
@@ -20,6 +32,7 @@ class SkillsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ← Header
             Row(
               children: [
                 InkWell(
@@ -38,40 +51,45 @@ class SkillsScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20.h),
-            Obx(() => Column(
-                  children: List.generate(controller.list.length, (index) {
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 15.h),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ResumeTextField(
-                              label: 'Skill ${index + 1}',
-                              hint: 'e.g. Flutter, React',
-                              controller: controller.list[index],
-                            ),
+
+            // ← Dynamic list of skill fields
+            Obx(() {
+              return Column(
+                children: List.generate(controller.list.length, (index) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 15.h),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ResumeTextField(
+                            label: 'Skill ${index + 1}',
+                            hint: 'e.g. Flutter, React',
+                            controller: controller.list[index],
                           ),
-                          IconButton(
-                            onPressed: () => controller.removeField(index),
-                            icon: const Icon(Icons.delete_forever,
-                                color: Colors.white),
+                        ),
+                        IconButton(
+                          onPressed: () => controller.removeField(index),
+                          icon: const Icon(
+                            Icons.delete_forever,
+                            color: Colors.white,
                           ),
-                        ],
-                      ),
-                    );
-                  }),
-                )),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              );
+            }),
+
+            SizedBox(height: 20.h),
+
+            // ← Save & Add buttons
             Row(
               children: [
                 Expanded(
                   child: RoundButton(
                     title: "Save",
-                    onTap: () {
-                      for (var skill in controller.list) {
-                        print("Skill: ${skill.text}");
-                        // Save logic
-                      }
-                    },
+                    onTap: _onSave,
                     color: ColorConstants().buttonColor,
                     isloading: false,
                   ),
@@ -86,10 +104,40 @@ class SkillsScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void _onSave() {
+    // 1) Require at least one skill
+    if (controller.list.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Please add at least one skill.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    // 2) No empty skill fields
+    if (controller.list.any((c) => c.text.trim().isEmpty)) {
+      Get.snackbar(
+        'Error',
+        'Please fill in all skill fields or remove empty ones.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    // All good → you can now persist controller.list.map((c)=>c.text).toList()
+    // e.g. via your ResumeDataController or your existing save logic:
+    //
+    final skills = controller.list.map((c) => c.text.trim()).toList();
+    resumeCtrl.updateSkills(skills);
+    //
+    Get.back();
   }
 }
