@@ -27,9 +27,17 @@ class SectionScreen extends StatelessWidget {
       'label': 'Personal',
       'screen': const PersonalDetailScreen()
     },
-    {'icon': Icons.school, 'label': 'Education', 'screen': EducationScreen()},
-    {'icon': Icons.work, 'label': 'Experience', 'screen': ExperienceScreen()},
-    {'icon': Icons.settings, 'label': 'Skill', 'screen': SkillsScreen()},
+    {
+      'icon': Icons.school,
+      'label': 'Education',
+      'screen': const EducationScreen()
+    },
+    {
+      'icon': Icons.work,
+      'label': 'Experience',
+      'screen': const ExperienceScreen()
+    },
+    {'icon': Icons.settings, 'label': 'Skill', 'screen': const SkillsScreen()},
     {
       'icon': Icons.track_changes,
       'label': 'Objective',
@@ -46,13 +54,17 @@ class SectionScreen extends StatelessWidget {
     {
       'icon': Icons.rocket_launch,
       'label': 'Projects',
-      'screen': ProjectScreen()
+      'screen': const ProjectScreen()
     },
-    {'icon': Icons.language, 'label': 'Languages', 'screen': LanguageScreen()},
+    {
+      'icon': Icons.language,
+      'label': 'Languages',
+      'screen': const LanguageScreen()
+    },
     {
       'icon': Icons.emoji_events,
       'label': 'certifications',
-      'screen': CertificationScreen()
+      'screen': const CertificationScreen()
     },
     {
       'icon': Icons.self_improvement,
@@ -75,7 +87,7 @@ class SectionScreen extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () => Get.back(),
-                      child: Icon(Icons.arrow_back, color: Colors.white),
+                      child: const Icon(Icons.arrow_back, color: Colors.white),
                     ),
                     SizedBox(width: 10.w),
                     Text(
@@ -86,8 +98,8 @@ class SectionScreen extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    Spacer(),
-                    Icon(Icons.help_outline, color: Colors.white),
+                    const Spacer(),
+                    const Icon(Icons.help_outline, color: Colors.white),
                   ],
                 ),
                 SizedBox(height: 20.h),
@@ -105,7 +117,7 @@ class SectionScreen extends StatelessWidget {
                                 'Please wait while we generate your resume.',
                                 backgroundColor: Colors.white,
                                 colorText: Colors.black,
-                                duration: Duration(seconds: 2),
+                                duration: const Duration(seconds: 2),
                               );
                               resumeCtrl.isGenerating.value = false;
                               return;
@@ -152,7 +164,7 @@ class SectionScreen extends StatelessWidget {
           GridView.builder(
             itemCount: items.length,
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,

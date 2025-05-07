@@ -158,6 +158,7 @@ class _MyResumeScreenState extends State<MyResumeScreen> {
           icon: Icon(Icons.arrow_back, color: Colors.white, size: 28.sp),
           onPressed: () => Get.back(),
         ),
+        // automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
@@ -177,11 +178,12 @@ class _MyResumeScreenState extends State<MyResumeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'My Resumes',
+              'MY SAVED RESUMES',
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
+                fontStyle: FontStyle.italic,
               ),
             ),
             SizedBox(height: 10.h),

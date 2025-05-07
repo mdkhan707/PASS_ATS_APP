@@ -52,10 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 'RESUME TEMPLATES',
                 style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic),
               ),
               SizedBox(height: 16.h),
               Expanded(
