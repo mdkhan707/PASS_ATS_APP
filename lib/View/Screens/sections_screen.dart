@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pass_ats/Controllers/resume_data_controller.dart';
 import 'package:pass_ats/View/Screens/SkillsScreen.dart';
 import 'package:pass_ats/View/Screens/certification_screen.dart';
@@ -12,6 +13,7 @@ import 'package:pass_ats/View/Screens/objective_screen.dart';
 import 'package:pass_ats/View/Screens/personal_details_screen.dart';
 import 'package:pass_ats/View/Screens/project_screen.dart';
 import 'package:pass_ats/View/Screens/soft_skills_screen.dart';
+import 'package:pass_ats/View/Screens/pdf_preview_screen.dart';
 import 'package:pass_ats/View/Widgets/custom_round_button.dart';
 import 'package:pass_ats/View/Widgets/gradient_scaffold.dart';
 import 'package:pass_ats/constants/colors.dart';
@@ -52,7 +54,7 @@ class SectionScreen extends StatelessWidget {
     {'icon': Icons.language, 'label': 'Languages', 'screen': LanguageScreen()},
     {
       'icon': Icons.emoji_events,
-      'label': 'certifications',
+      'label': 'Certifications',
       'screen': CertificationScreen()
     },
     {
@@ -61,6 +63,47 @@ class SectionScreen extends StatelessWidget {
       'screen': const SoftSkillsScreen(),
     },
   ];
+
+  void _generateResume() async {
+    // Show Lottie animation overlay
+    Get.dialog(
+      Center(
+        child: Container(
+          padding: EdgeInsets.all(20.w),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20.r),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset(
+                'assets/animations/loading_resume2.json',
+                width: 250.w,
+                height: 250.h,
+                fit: BoxFit.contain,
+                repeat: true,
+              ),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
+
+    // Generate resume
+    final pdfData = await resumeCtrl.generateResume(templateId);
+
+    // Close animation dialog
+    if (Get.isDialogOpen == true) {
+      Get.back();
+    }
+
+    // Navigate to PdfPreviewScreen if successful
+    if (pdfData != null) {
+      Get.to(() => PdfPreviewScreen(pdfData: pdfData));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,22 +142,8 @@ class SectionScreen extends StatelessWidget {
                 Obx(() => RoundButton(
                       title: "Generate Resume",
                       onTap: resumeCtrl.isGenerating.value
-                          ? () {
-                              print('is loading value is true');
-                              Get.snackbar(
-                                'Generating Resume',
-                                'Please wait while we generate your resume.',
-                                backgroundColor: Colors.white,
-                                colorText: Colors.black,
-                                duration: Duration(seconds: 2),
-                              );
-                              resumeCtrl.isGenerating.value = false;
-                              return;
-                            }
-                          : () {
-                              print('This function is called');
-                              resumeCtrl.generateResume(templateId);
-                            },
+                          ? () {} // Provide a no-op function while generating
+                          : _generateResume,
                       color: ColorConstants().buttonColor,
                       isloading: resumeCtrl.isGenerating.value,
                     )),

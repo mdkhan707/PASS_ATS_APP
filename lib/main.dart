@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: const Custom_NavigationBar());
+            home: const Splash_Screen());
       },
       designSize: const Size(390, 844),
     );
