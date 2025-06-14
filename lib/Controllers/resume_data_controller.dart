@@ -94,7 +94,7 @@ class ResumeDataController extends GetxController {
 
   final isGenerating = false.obs;
 
-  Future<void> generateResume() async {
+  Future<void> generateResume(String templateId) async {
     // 1) Validate presence of required data
     final missing = <String>[];
     if (personal.value.name.trim().isEmpty ||
@@ -119,6 +119,7 @@ class ResumeDataController extends GetxController {
 
     // 2) Build request body
     final body = {
+      'templateId': templateId,
       'name': personal.value.name.trim(),
       'phone': personal.value.phone.trim(),
       'email': personal.value.email.trim(),

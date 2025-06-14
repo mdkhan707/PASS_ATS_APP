@@ -3,10 +3,11 @@ import 'package:http/http.dart' as http;
 import 'package:pass_ats/Models/resume_model.dart';
 import 'dart:convert';
 
+import 'package:pass_ats/constants/app_constants.dart';
+
 class ResumeController extends GetxController {
   var resumeList = <ResumeTemplate>[].obs;
   var isLoading = true.obs; // Track loading state
-  final baseUrl = "http://10.0.2.2:5000"; // Replace with your backend URL
 
   @override
   void onInit() {
@@ -18,7 +19,8 @@ class ResumeController extends GetxController {
   Future<void> fetchResumes() async {
     try {
       isLoading(true); // Set loading to true while fetching
-      final response = await http.get(Uri.parse("$baseUrl/api/templates"));
+      final response =
+          await http.get(Uri.parse("${AppConstants.apiUrl}/api/templates"));
       if (response.statusCode == 200) {
         List data = jsonDecode(response.body);
         resumeList.value = data.map((e) => ResumeTemplate.fromJson(e)).toList();
@@ -33,8 +35,10 @@ class ResumeController extends GetxController {
   }
 
   // Get full URL for the PNG image
-  String getFullImageUrl(String relativePath) => "$baseUrl$relativePath";
+  String getFullImageUrl(String relativePath) =>
+      "${AppConstants.apiUrl}$relativePath";
 
   // Get full URL for the PDF file
-  String getFullPdfUrl(String relativePath) => "$baseUrl$relativePath";
+  String getFullPdfUrl(String relativePath) =>
+      "${AppConstants.apiUrl}$relativePath";
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pass_ats/View/Screens/sections_screen.dart';
 import 'package:pass_ats/View/Widgets/custom_round_button.dart';
 import 'package:pass_ats/constants/colors.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -58,10 +59,10 @@ class TemplatePreviewScreen extends StatelessWidget {
               child: RoundButton(
                 title: 'Use this Template',
                 onTap: () {
-                  Get.snackbar(
-                    "Action",
-                    "Using the template with ID: $templateId",
-                  );
+                  print('This is the template id:$templateId');
+                  Get.to(() => SectionScreen(
+                        templateId: templateId,
+                      ));
                 },
                 color: ColorConstants().buttonColor,
                 isloading: false,

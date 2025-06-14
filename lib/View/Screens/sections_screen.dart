@@ -17,7 +17,8 @@ import 'package:pass_ats/View/Widgets/gradient_scaffold.dart';
 import 'package:pass_ats/constants/colors.dart';
 
 class SectionScreen extends StatelessWidget {
-  SectionScreen({super.key});
+  final String templateId;
+  SectionScreen({super.key, this.templateId = '684d63a26e2036897015de36'});
   final ResumeDataController resumeCtrl = Get.isRegistered()
       ? Get.find()
       : Get.put(ResumeDataController(), permanent: true);
@@ -112,7 +113,7 @@ class SectionScreen extends StatelessWidget {
                             }
                           : () {
                               print('This function is called');
-                              resumeCtrl.generateResume();
+                              resumeCtrl.generateResume(templateId);
                             },
                       color: ColorConstants().buttonColor,
                       isloading: resumeCtrl.isGenerating.value,
