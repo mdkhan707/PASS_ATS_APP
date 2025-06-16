@@ -34,11 +34,6 @@ class SectionScreen extends StatelessWidget {
     {'icon': Icons.work, 'label': 'Experience', 'screen': ExperienceScreen()},
     {'icon': Icons.settings, 'label': 'Skill', 'screen': SkillsScreen()},
     {
-      'icon': Icons.track_changes,
-      'label': 'Objective',
-      'screen': const ObjectiveScreen()
-    },
-    {
       'icon': Icons.description,
       'label': 'Job Description',
       'screen': const JobDescriptionScreen()
