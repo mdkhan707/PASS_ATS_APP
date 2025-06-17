@@ -9,7 +9,6 @@ import 'package:pass_ats/View/Screens/education_screen.dart';
 import 'package:pass_ats/View/Screens/experience_screen.dart';
 import 'package:pass_ats/View/Screens/job_description.dart';
 import 'package:pass_ats/View/Screens/language_screen.dart';
-import 'package:pass_ats/View/Screens/objective_screen.dart';
 import 'package:pass_ats/View/Screens/personal_details_screen.dart';
 import 'package:pass_ats/View/Screens/project_screen.dart';
 import 'package:pass_ats/View/Screens/soft_skills_screen.dart';

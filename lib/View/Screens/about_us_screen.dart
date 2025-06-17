@@ -32,7 +32,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             ),
             SizedBox(height: 12.h),
             Text(
-              'At PassATS, we help you create professional, ATS-friendly resumes with ease. Our app uses AI-powered by Llama-2 to generate tailored resumes based on your details and job descriptions, ensuring your resume passes Applicant Tracking Systems used by recruiters.',
+              'PassATS is a mobile application designed to assist job seekers in creating Applicant Tracking System (ATS)-compliant resumes using LLaMA 3.3, an open-source large language model.',
               style: TextStyle(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w400,
@@ -41,7 +41,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             ),
             SizedBox(height: 16.h),
             Text(
-              'Why Choose PassATS?',
+              'Key Features:',
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
@@ -50,21 +50,25 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             ),
             SizedBox(height: 8.h),
             bulletPoint(
-                'ATS-Optimized: Every resume is designed to pass ATS with relevant keywords and proper formatting.'),
+                'Solves the problem of resumes being filtered out by automated systems.'),
             bulletPoint(
-                'Tailored for Jobs: Input your experience and job description, and we customize your resume accordingly.'),
+                'Accessible, customizable, and privacy-focused resume generation.'),
             bulletPoint(
-                'Fast & Simple: Use pre-designed templates to quickly create polished resumes.'),
+                'Templates are based on successful resumes from companies like Google and Facebook.'),
+            bulletPoint('Ensures ATS compatibility using best practices.'),
             bulletPoint(
-                'Secure Data: Your data is safely stored in Firebase, accessible anytime.'),
+                'Powered by Groq Cloud for efficient, cost-free AI resume generation.'),
+            bulletPoint(
+                'Targets graduates, freelancers, and underserved communities.'),
             SizedBox(height: 20.h),
             RoundButton(
-                title: 'Generate a resume with us',
-                onTap: () {
-                  Get.to(() => SectionScreen());
-                },
-                color: ColorConstants().buttonColor,
-                isloading: false)
+              title: 'Generate a resume with us',
+              onTap: () {
+                Get.to(() => SectionScreen());
+              },
+              color: ColorConstants().buttonColor,
+              isloading: false,
+            )
           ],
         ),
       ),
